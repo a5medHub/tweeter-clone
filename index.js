@@ -1,6 +1,7 @@
 import { tweetsData } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+
 /*
 Challenge:
 3. We could improve index.js by moving one line
@@ -18,6 +19,12 @@ document.addEventListener('click', function(e){
         handleReplyClick(e.target.dataset.reply)
     }
     else if (e.target.dataset.addReplies){
+        let isAddReplies = e.target.dataset.addReplies
+        if(document.display == 'none'){
+            document.display == 'block'
+        }else{
+            document.display == 'none'
+        }
         handleAddRepliesBtnClick()
     }
     
@@ -88,16 +95,20 @@ Challenge:
 }
 function handleAddRepliesBtnClick(){
     console.log("addReply")
-    const feetReplies = `
-    <div class="tweet-reply hiddenReplies">
-        <div class="tweet-inner ">
-            <input type="text" id="replies-input" placeholder="commant..."/>
-        </div>
-    </div>
-            `
+    // const feetReplies = `
+    // <div class="tweet-reply hiddenReplies">
+    //     <div class="tweet-inner ">
+    //         <input type="text" id="replies-input" placeholder="commant..."/>
+    //     </div>
+    // </div>`
+            
+    // return feetReplies
+
+    
 }
 
 function getFeedHtml(){
+
     let feedHtml = ``
     
     tweetsData.forEach(function(tweet){
@@ -122,60 +133,64 @@ function getFeedHtml(){
         if(tweet.replies.length > 0){
             tweet.replies.forEach(function(reply){
                 repliesHtml+=`
-<div class="tweet-reply">
-    <div class="tweet-inner">
-        <img src="${reply.profilePic}" class="profile-pic">
-            <div>
-                <p class="handle">${reply.handle}</p>
-                <p class="tweet-text">${reply.tweetText}</p>
-            </div>
-        </div>
-</div>
-`
+                    <div class="tweet-reply">
+                        <div class="tweet-inner">
+                            <img src="${reply.profilePic}" class="profile-pic">
+                                <div>
+                                    <p class="handle">${reply.handle}</p>
+                                    <p class="tweet-text">${reply.tweetText}</p>
+                                </div>
+                            </div>
+                    </div>
+                    `
             })
         }
         
           
         feedHtml += `
-<div class="tweet">
-    <div class="tweet-inner">
-        <img src="${tweet.profilePic}" class="profile-pic">
-        <div>
-            <p class="handle">${tweet.handle}</p>
-            <p class="tweet-text">${tweet.tweetText}</p>
-            <div class="tweet-details">
-                <span class="tweet-detail">
-                    <i class="fa-regular fa-comment-dots"
-                    data-reply="${tweet.uuid}"
-                    ></i>
-                    ${tweet.replies.length}
-                </span>
-                <span class="tweet-detail">
-                    <i class="fa-solid fa-heart ${likeIconClass}"
-                    data-like="${tweet.uuid}"
-                    ></i>
-                    ${tweet.likes}
-                </span>
-                <span class="tweet-detail">
-                    <i class="fa-solid fa-retweet ${retweetIconClass}"
-                    data-retweet="${tweet.uuid}"
-                    ></i>
-                    ${tweet.retweets}
-                </span>
-                <span class="tweet-detail">
-                    <i class="fa-solid fa-reply "
-                    data-add-replies="${tweet.uuid}"
-                    ></i>
+            <div class="tweet">
+                <div class="tweet-inner">
+                    <img src="${tweet.profilePic}" class="profile-pic">
+                    <div>
+                        <p class="handle">${tweet.handle}</p>
+                        <p class="tweet-text">${tweet.tweetText}</p>
+                        <div class="tweet-details">
+                            <span class="tweet-detail">
+                                <i class="fa-regular fa-comment-dots"
+                                data-reply="${tweet.uuid}"
+                                ></i>
+                                ${tweet.replies.length}
+                            </span>
+                            <span class="tweet-detail">
+                                <i class="fa-solid fa-heart ${likeIconClass}"
+                                data-like="${tweet.uuid}"
+                                ></i>
+                                ${tweet.likes}
+                            </span>
+                            <span class="tweet-detail">
+                                <i class="fa-solid fa-retweet ${retweetIconClass}"
+                                data-retweet="${tweet.uuid}"
+                                ></i>
+                                ${tweet.retweets}
+                            </span>
+                            <span class="tweet-detail">
+                                <i class="fa-solid fa-reply "
+                                data-add-replies="${tweet.uuid}"
+                                ></i>
+                                
+                            </span>
+                        </div>   
+                    </div>            
+                </div>
+                <div class="hidden" id="replies-${tweet.uuid}">
+                    ${repliesHtml}
                     
-                </span>
-            </div>   
-        </div>            
-    </div>
-    <div class="hidden" id="replies-${tweet.uuid}">
-        ${repliesHtml}
-    </div>   
-</div>
-`
+                </div>  
+                    
+
+                
+            </div>
+            `
    })
    return feedHtml 
 }
