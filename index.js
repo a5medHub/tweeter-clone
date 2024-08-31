@@ -144,6 +144,12 @@ function getFeedHtml(){
                     ></i>
                     ${tweet.retweets}
                 </span>
+                <span class="tweet-detail">
+                    <i class="fa-solid fa-reply ${addReplyIconClass}"
+                    data-retweet="${tweet.uuid}"
+                    ></i>
+                    
+                </span>
             </div>   
         </div>            
     </div>
