@@ -130,3 +130,6 @@ button{
 .hidden{
     display: none;
 }
+.hiddenReplies{
+    display: none;
+}

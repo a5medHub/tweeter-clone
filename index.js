@@ -88,6 +88,13 @@ Challenge:
 }
 function handleAddRepliesBtnClick(){
     console.log("addReply")
+    const feetReplies = `
+    <div class="tweet-reply hiddenReplies">
+        <div class="tweet-inner ">
+            <input type="text" id="replies-input" placeholder="commant..."/>
+        </div>
+    </div>
+            `
 }
 
 function getFeedHtml(){
