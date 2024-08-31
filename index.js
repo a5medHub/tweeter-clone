@@ -17,9 +17,14 @@ document.addEventListener('click', function(e){
     else if(e.target.dataset.reply){
         handleReplyClick(e.target.dataset.reply)
     }
+    else if (e.target.dataset.addReplies){
+        handleAddRepliesBtnClick()
+    }
+    
     else if(e.target.id === 'tweet-btn'){
         handleTweetBtnClick()
-    }
+    } 
+
 })
  
 function handleLikeClick(tweetId){ 
@@ -80,6 +85,9 @@ Challenge:
     tweetInput.value = ''
     }
 
+}
+function handleAddRepliesBtnClick(){
+    console.log("addReply")
 }
 
 function getFeedHtml(){
