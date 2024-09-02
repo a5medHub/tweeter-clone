@@ -1,5 +1,9 @@
-import { tweetsData } from './data.js'
-import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+import {
+    tweetsData
+} from './data.js'
+import {
+    v4 as uuidv4
+} from 'https://jspm.dev/uuid';
 
 
 /*
@@ -8,75 +12,68 @@ Challenge:
    of code to a better position. Find it and move it!
 */
 
-document.addEventListener('click', function(e){
-    if(e.target.dataset.like){
-       handleLikeClick(e.target.dataset.like) 
-    }
-    else if(e.target.dataset.retweet){
+document.addEventListener('click', function (e) {
+    if (e.target.dataset.like) {
+        handleLikeClick(e.target.dataset.like)
+    } else if (e.target.dataset.retweet) {
         handleRetweetClick(e.target.dataset.retweet)
-    }
-    else if(e.target.dataset.reply){
+    } else if (e.target.dataset.reply) {
         handleReplyClick(e.target.dataset.reply)
-    }
-    else if (e.target.dataset.addReplies){
+    } else if (e.target.dataset.addReplies) {
         let isAddReplies = e.target.dataset.addReplies
-        if(document.display == 'none'){
+        if (document.display == 'none') {
             document.display == 'block'
-        }else{
+        } else {
             document.display == 'none'
         }
         handleAddRepliesBtnClick()
-    }
-    
-    else if(e.target.id === 'tweet-btn'){
+    } else if (e.target.id === 'tweet-btn') {
         handleTweetBtnClick()
-    } 
+    }
 
 })
- 
-function handleLikeClick(tweetId){ 
-    const targetTweetObj = tweetsData.filter(function(tweet){
+
+function handleLikeClick(tweetId) {
+    const targetTweetObj = tweetsData.filter(function (tweet) {
         return tweet.uuid === tweetId
     })[0]
 
-    if (targetTweetObj.isLiked){
+    if (targetTweetObj.isLiked) {
         targetTweetObj.likes--
-    }
-    else{
-        targetTweetObj.likes++ 
+    } else {
+        targetTweetObj.likes++
     }
     targetTweetObj.isLiked = !targetTweetObj.isLiked
     render()
 }
 
-function handleRetweetClick(tweetId){
-    const targetTweetObj = tweetsData.filter(function(tweet){
+function handleRetweetClick(tweetId) {
+    const targetTweetObj = tweetsData.filter(function (tweet) {
         return tweet.uuid === tweetId
     })[0]
-    
-    if(targetTweetObj.isRetweeted){
+
+    if (targetTweetObj.isRetweeted) {
         targetTweetObj.retweets--
-    }
-    else{
+    } else {
         targetTweetObj.retweets++
     }
     targetTweetObj.isRetweeted = !targetTweetObj.isRetweeted
-    render() 
+    render()
 }
 
-function handleReplyClick(replyId){
+function handleReplyClick(replyId) {
     document.getElementById(`replies-${replyId}`).classList.toggle('hidden')
 }
 
-function handleTweetBtnClick(){
+function handleTweetBtnClick() {
     const tweetInput = document.getElementById('tweet-input')
 
-/*
-Challenge:
-1. No empty tweets!
-2. Clear the textarea after tweeting!
-*/
-    if(tweetInput.value){
+    /*
+    Challenge:
+    1. No empty tweets!
+    2. Clear the textarea after tweeting!
+    */
+    if (tweetInput.value) {
         tweetsData.unshift({
             handle: `@Scrimba`,
             profilePic: `images/scrimbalogo.png`,
@@ -88,12 +85,13 @@ Challenge:
             isRetweeted: false,
             uuid: uuidv4()
         })
-    render()
-    tweetInput.value = ''
+        render()
+        tweetInput.value = ''
     }
 
 }
-function handleAddRepliesBtnClick(){
+
+function handleAddRepliesBtnClick() {
     console.log("addReply")
     // const feetReplies = `
     // <div class="tweet-reply hiddenReplies">
@@ -101,38 +99,38 @@ function handleAddRepliesBtnClick(){
     //         <input type="text" id="replies-input" placeholder="commant..."/>
     //     </div>
     // </div>`
-            
+
     // return feetReplies
 
-    
+
 }
 
-function getFeedHtml(){
+function getFeedHtml() {
 
     let feedHtml = ``
-    
-    tweetsData.forEach(function(tweet){
-        
+
+    tweetsData.forEach(function (tweet) {
+
         let likeIconClass = ''
-        
-        if (tweet.isLiked){
+
+        if (tweet.isLiked) {
             likeIconClass = 'liked'
         }
-        
+
         let retweetIconClass = ''
-        
-        if (tweet.isRetweeted){
+
+        if (tweet.isRetweeted) {
             retweetIconClass = 'retweeted'
         }
         let addReplyIconClass = ''
 
-        
-        
+
+
         let repliesHtml = ''
-        
-        if(tweet.replies.length > 0){
-            tweet.replies.forEach(function(reply){
-                repliesHtml+=`
+
+        if (tweet.replies.length > 0) {
+            tweet.replies.forEach(function (reply) {
+                repliesHtml += `
                     <div class="tweet-reply">
                         <div class="tweet-inner">
                             <img src="${reply.profilePic}" class="profile-pic">
@@ -145,8 +143,8 @@ function getFeedHtml(){
                     `
             })
         }
-        
-          
+
+
         feedHtml += `
             <div class="tweet">
                 <div class="tweet-inner">
@@ -177,7 +175,6 @@ function getFeedHtml(){
                                 <i class="fa-solid fa-reply "
                                 data-add-replies="${tweet.uuid}"
                                 ></i>
-                                
                             </span>
                         </div>   
                     </div>            
@@ -185,17 +182,27 @@ function getFeedHtml(){
                 <div class="hidden" id="replies-${tweet.uuid}">
                     ${repliesHtml}
                     
-                </div>  
+                </div>
+                
+                <div class="tweet-reply">
+                        <div class="tweet-inner">
+                            <img src="" class="profile-pic">
+                                <div>
+                                    <p class="handle">reply.handle</p>
+                                    <p class="tweet-text">reply.tweetText</p>
+                                </div>
+                            </div>
+                    </div>
                     
 
                 
             </div>
             `
-   })
-   return feedHtml 
+    })
+    return feedHtml
 }
 
-function render(){
+function render() {
     document.getElementById('feed').innerHTML = getFeedHtml()
 }
 
